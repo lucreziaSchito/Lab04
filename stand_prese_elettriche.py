@@ -1,0 +1,2 @@
+class PreseElettriche :
+    pass
