@@ -1,6 +1,8 @@
 from csv import reader
-
 from stand import Stand
+from espositore import Espositore
+from stand_premium import Premium
+from stand_prese_elettriche import PreseElettriche
 
 
 class LingottoFiere:
@@ -28,11 +30,18 @@ class LingottoFiere:
             CsvReader = reader(fileIn)
             for line in CsvReader:
                 if line[0][:2] == "ST" :
-                    s = Stand(line[0], line[1], line[2], line[3])
-
-
-############################################################################
-
+                    if line[4].isdigit() :
+                        s = PreseElettriche(line[0], line[1], line[2], line[3], line[4])
+                    elif line[4].isalpha() :
+                        s = Premium(line[0], line[1], line[2], line[3], line[4])
+                    else :
+                        s = Stand(line[0], line[1], line[2], line[3])
+                    self.__listaStand.append(s)
+                elif line[0][:2] == "ES" :
+                    e = Espositore(line[0], line[1], line[2])
+                    self.__listaEspositori.append(e)
+                else :
+                    print("Tipologia di dato non specificata")
             fileIn.close()
         except FileNotFoundError:
             raise FileNotFoundError("Il percorso file da lei inserito non ha trovato nessuna corrispondenza")
@@ -45,6 +54,6 @@ class LingottoFiere:
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         # TODO
 
-    def stand_ordinati_per_prezzo(self):
+    def stand_ordinati_per_prezzo(self):    #polimorfismo
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         # TODO
