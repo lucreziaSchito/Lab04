@@ -2,6 +2,7 @@ from stand import Stand
 
 class Premium(Stand) :
     def __init__(self, idStand, superficie, padiglione, prezzo, posizione):
-        super().__init__(idStand, superficie, padiglione)
+        super().__init__(idStand, superficie, padiglione)  # OVERRIDING
         self.prezzo = prezzo*1.30
         self.posizione = posizione
+# eq di base confronta i riferimenti
