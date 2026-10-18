@@ -56,7 +56,6 @@ class LingottoFiere:
         for s in self.__dictStand.values():
             if s.idEspositore == codice_espositore:
                 raise Exception(f"L'espositore {codice_espositore} è già associato allo stand {s.codice_stand}.")
-
         if self.__dictStand[codice_stand].idEspositore is None:
             self.__dictStand[codice_stand].idEspositore = codice_espositore
         else :
@@ -66,6 +65,19 @@ class LingottoFiere:
     def elenca_espositori(self):
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         # TODO
+        # facciamo scorrere il ciclo tra i valori del dizionario : gli oggetti
+        for espositore in self.__dictEspositori.values():
+            standAssegnato = None # variabile flag dove andrò a memorizzare la corrispondenza se trovata
+            for cod_stand in self.__dictStand :
+                if self.__dictStand[cod_stand].idEspositore is not None and espositore == self.__dictStand[cod_stand].idEspositore:
+                # il primo controllo serve per assicurarci che lo stand non sia vuoto (None) prima di confrontarlo con il nostro oggetto espositore
+                    standAssegnato = cod_stand
+                    break #interrompiamo il ciclo
+            if standAssegnato is not None:
+                print(espositore.idEspositore, standAssegnato)
+            else :
+                print(espositore.idEspositore)
+
 
     def stand_ordinati_per_prezzo(self):    #polimorfismo
         """Restituisce la lista ordinata degli stand in base al prezzo"""
