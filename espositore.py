@@ -8,3 +8,6 @@ class Espositore :
         if isinstance(other, Espositore) :
             return self.idEspositore == other.idEspositore
         return False
+
+    def __str__(self) :
+        return f"Espositore {self.idEspositore}: {self.__nome} {self.__cognome}"

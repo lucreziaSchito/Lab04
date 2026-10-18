@@ -49,9 +49,9 @@ class LingottoFiere:
     def assegna_stand_a_espositore(self, codice_stand, codice_espositore):  # chiave esterna
         """Associa uno stand a un espositore"""
         # TODO
-        if codice_stand not in self.__listaStand:
+        if codice_stand not in self.__dictStand:
             raise Exception("Il codice non corrisponde a nessuno stand")
-        if codice_espositore not in self.__listaEspositori:
+        if codice_espositore not in self.__dictEspositori:
             raise Exception("Il codice non corrisponde a nessun'espositore")
         for s in self.__dictStand.values():
             if s.idEspositore == codice_espositore:
@@ -74,7 +74,7 @@ class LingottoFiere:
                     standAssegnato = cod_stand
                     break #interrompiamo il ciclo
             if standAssegnato is not None:
-                print(espositore.idEspositore, standAssegnato)
+                print(espositore.idEspositore, self.__dictStand[standAssegnato])
             else :
                 print(espositore.idEspositore)
 
@@ -82,3 +82,6 @@ class LingottoFiere:
     def stand_ordinati_per_prezzo(self):    #polimorfismo
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         # TODO
+        return sorted(self.__dictStand.values())
+    # abbiamo sovrasvritto il metodo di confronto __lt__ di Object() in modo tale che questo metodo restituisca una
+    # lista di stand ordinati per prezzo finale crescente
