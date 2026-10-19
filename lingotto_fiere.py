@@ -30,10 +30,11 @@ class LingottoFiere:
             CsvReader = reader(fileIn)
             for line in CsvReader:
                 if line[0][:2] == "ST" :
-                    if line[4].isdigit() :
-                        s = PreseElettriche(line[0], line[1], line[2], line[3], line[4])
-                    elif line[4].isalpha() :
-                        s = Premium(line[0], line[1], line[2], line[3], line[4])
+                    if len(line) == 5 :
+                        if line[4].isdigit() :
+                            s = PreseElettriche(line[0], line[1], line[2], line[3], line[4])
+                        else :
+                            s = Premium(line[0], line[1], line[2], line[3], line[4])
                     else :
                         s = Stand(line[0], line[1], line[2], line[3])
                     self.__dictStand[line[0]] = s
@@ -69,14 +70,18 @@ class LingottoFiere:
         for espositore in self.__dictEspositori.values():
             standAssegnato = None # variabile flag dove andrò a memorizzare la corrispondenza se trovata
             for cod_stand in self.__dictStand :
-                if self.__dictStand[cod_stand].idEspositore is not None and espositore == self.__dictStand[cod_stand].idEspositore:
-                # il primo controllo serve per assicurarci che lo stand non sia vuoto (None) prima di confrontarlo con il nostro oggetto espositore
-                    standAssegnato = cod_stand
-                    break #interrompiamo il ciclo
+                if self.__dictStand[cod_stand].idEspositore is not None:
+                # il controllo serve per assicurarci che lo stand non sia vuoto (None) prima di confrontarlo con il nostro oggetto espositore
+                    stand = self.__dictStand[cod_stand]
+                    espositore_dello_stand = self.__dictEspositori[stand.idEspositore]
+                    # ho trovato il collegamento tra stand ed espositore per il confronto con eq
+                    if espositore == espositore_dello_stand:
+                        standAssegnato = cod_stand
+                        break #interrompiamo il ciclo, abbiamo trovato la corrispondenza
             if standAssegnato is not None:
-                print(espositore.idEspositore, self.__dictStand[standAssegnato])
+                print(espositore, "associato allo stand", standAssegnato)
             else :
-                print(espositore.idEspositore)
+                print(espositore)
 
 
     def stand_ordinati_per_prezzo(self):    #polimorfismo
