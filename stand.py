@@ -4,14 +4,14 @@ class Stand :
         self.__superficie = float(superficie)
         self.__padiglione = padiglione
         self.__prezzo = float(prezzo)
-        self.__idEspositore = None
+        self.__espositoreAssegnato = None # var. di riferimento
 
     @property
-    def idEspositore(self):
-        return self.__idEspositore
-    @idEspositore.setter
-    def idEspositore(self, id):
-        self.__idEspositore = id
+    def espositoreAssegnato(self):
+        return self.__espositoreAssegnato
+    @espositoreAssegnato.setter
+    def espositoreAssegnato(self, id):
+        self.__espositoreAssegnato = id
 
     # ho implementato il metodo getter per ogni attributo della classe padre per l'ereditarietà delle classi figlie
     @property
@@ -32,11 +32,11 @@ class Stand :
         return self.prezzo   # sto usando la property
 
     def __str__(self):
-        if self.idEspositore is None:
+        if self.espositoreAssegnato is None:
             return f"{self.__idStand}: Stand Base | {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Disponibile"
         # stamperà il risultato con 2 cifre decimali grazie al :.2f
         else :
-            return f"{self.__idStand}: Stand Base | {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Espositore: {self.__idEspositore}"
+            return f"{self.__idStand}: Stand Base | {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.prezzo_finale():.2f}€ - {self.__espositoreAssegnato}"
 
 
     def __lt__(self, other):

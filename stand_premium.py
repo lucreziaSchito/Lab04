@@ -12,7 +12,7 @@ class Premium(Stand) :
         return self.prezzo*1.30
 
     def __str__(self):
-        if self.idEspositore is None:
-            return f"{self.idStand}: Stand Premium | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Posizione:{self.__posizione} - Disponibile"
+        if self.espositoreAssegnato is None:
+            return f"{self.idStand}: Stand Premium | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Posizione: {self.__posizione} - Disponibile"
         else:
-            return f"{self.idStand}: Stand Premium | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Posizione:{self.__posizione} - Espositore: {self.idEspositore}"
+            return f"{self.idStand}: Stand Premium | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Posizione: {self.__posizione} - {self.espositoreAssegnato}"

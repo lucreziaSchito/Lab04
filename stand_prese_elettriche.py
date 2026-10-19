@@ -12,7 +12,7 @@ class PreseElettriche(Stand) :
         return self.prezzo * (1 + 0.07 * self.__numPreseElettriche)
 
     def __str__(self):
-        if self.idEspositore is None:
-            return f"{self.idStand}: Prese Extra | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Prese aggiuntive :{self.__numPreseElettriche} - Disponibile"
+        if self.espositoreAssegnato is None:
+            return f"{self.idStand}: Prese Extra | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Prese aggiuntive: {self.__numPreseElettriche} - Disponibile"
         else:
-            return f"{self.idStand}: Prese Extra | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Prese aggiuntiva :{self.__numPreseElettriche} - Espositore: {self.idEspositore}"
+            return f"{self.idStand}: Prese Extra | {self.superficie} mq - Padiglione {self.padiglione} - Prezzo {self.prezzo_finale():.2f}€ - Prese aggiuntiva: {self.__numPreseElettriche} - {self.espositoreAssegnato}"

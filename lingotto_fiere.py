@@ -47,40 +47,34 @@ class LingottoFiere:
         except FileNotFoundError:
             raise FileNotFoundError("Il percorso file da lei inserito non ha trovato nessuna corrispondenza")
 
-    def assegna_stand_a_espositore(self, codice_stand, codice_espositore):  # chiave esterna
+    def assegna_stand_a_espositore(self, codice_stand, codice_espositore):
         """Associa uno stand a un espositore"""
         # TODO
         if codice_stand not in self.__dictStand:
-            raise Exception("Il codice non corrisponde a nessuno stand")
+            raise Exception(f"Il codice {codice_stand} non corrisponde a nessuno stand")
         if codice_espositore not in self.__dictEspositori:
-            raise Exception("Il codice non corrisponde a nessun'espositore")
-        for s in self.__dictStand.values():
-            if s.idEspositore == codice_espositore:
-                raise Exception(f"L'espositore {codice_espositore} è già associato allo stand {s.codice_stand}.")
-        if self.__dictStand[codice_stand].idEspositore is None:
-            self.__dictStand[codice_stand].idEspositore = codice_espositore
-        else :
+            raise Exception(f"Il codice {codice_espositore} non corrisponde a nessun'espositore")
+
+        stand = self.__dictStand[codice_stand]
+        espositore = self.__dictEspositori[codice_espositore]
+
+        if espositore.standAssegnato is not None:
+            raise Exception(f"L'espositore {codice_espositore} è già associato allo stand {espositore.standAssegnato.idStand}.")
+        if stand.espositoreAssegnato is None:
+            stand.espositoreAssegnato = espositore  # assegnazione bidirezionale tramite riferimenti agli oggetti !
+            espositore.standAssegnato = stand
+        else:
             raise Exception("Lo stand da lei inserito non è disponibile")
 
 
     def elenca_espositori(self):
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         # TODO
-        # facciamo scorrere il ciclo tra i valori del dizionario : gli oggetti
+
         for espositore in self.__dictEspositori.values():
-            standAssegnato = None # variabile flag dove andrò a memorizzare la corrispondenza se trovata
-            for cod_stand in self.__dictStand :
-                if self.__dictStand[cod_stand].idEspositore is not None:
-                # il controllo serve per assicurarci che lo stand non sia vuoto (None) prima di confrontarlo con il nostro oggetto espositore
-                    stand = self.__dictStand[cod_stand]
-                    espositore_dello_stand = self.__dictEspositori[stand.idEspositore]
-                    # ho trovato il collegamento tra stand ed espositore per il confronto con eq
-                    if espositore == espositore_dello_stand:
-                        standAssegnato = cod_stand
-                        break #interrompiamo il ciclo, abbiamo trovato la corrispondenza
-            if standAssegnato is not None:
-                print(espositore, "associato allo stand", standAssegnato)
-            else :
+            if espositore.standAssegnato is not None:
+                print(espositore, "associato allo stand", espositore.standAssegnato.idStand)
+            else:
                 print(espositore)
 
 
